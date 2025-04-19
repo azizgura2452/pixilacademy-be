@@ -158,7 +158,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, heading, subtext, avat
           delay={getAnimationDelay()}
         >
           <Image
-            src={avatar.image?.url || `/api/placeholder/40/40`}
+            src={avatar.image?.url || 'https://thumbs.dreamstime.com/b/portrait-young-handsome-happy-man-wearing-glasses-casual-smart-blue-clothing-yellow-color-background-square-composition-200740125.jpg'}
             alt="Student profile"
             width={avatar.size || 40}
             height={avatar.size || 40}

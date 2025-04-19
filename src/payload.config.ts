@@ -10,7 +10,6 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Courses } from './collections/Courses'
-import { courseBySlugEndpoint } from './app/endpoints/course-by-slug'
 import { HeroSection } from './globals/HeroSection'
 import { WhyJoin } from './globals/WhyJoin'
 import { CoursesSection } from './globals/CourseSection'
@@ -25,6 +24,14 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      logout: {
+        Button: {
+          path: '/components/Admin/UI/logout.tsx',
+          exportName: 'Logout',
+        },
+      },
+    }
   },
   collections: [Courses, Users, Media],
   globals: [HeroSection, WhyJoin, CoursesSection, SiteSettings],

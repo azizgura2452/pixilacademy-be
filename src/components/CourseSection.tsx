@@ -1,12 +1,13 @@
 import React from 'react';
 import { Box, Typography, styled } from '@mui/material';
 import CourseCard from './CourseCard';
+import { Course } from '@/payload-types';
 
 interface CoursesListProps {
   title?: string;
   heading?: string;
   description?: string;
-  courses?: any[];
+  courses?: Course[];
 }
 
 const SectionWrapper = styled(Box)(({ theme }) => ({

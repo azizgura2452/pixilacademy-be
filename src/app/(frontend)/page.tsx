@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Box, Container, Typography, CircularProgress } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import HeroSection from '@/components/HeroSection';
 import { getCourses, getGlobals } from '@/utils/api';
 import WhyJoinSection from '@/components/WhyJoinSection';

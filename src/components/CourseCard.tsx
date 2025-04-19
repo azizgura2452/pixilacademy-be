@@ -5,13 +5,6 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { Favorite, ShoppingCart, Visibility } from '@mui/icons-material';
 import Link from 'next/link';
 
-interface Instructor {
-  name: string;
-  image: {
-    url: string;
-  };
-}
-
 interface Image {
   url: string;
 }
@@ -47,23 +40,6 @@ const CourseMediaWrapper = styled(Box)(({ theme }) => ({
   position: 'relative',
   overflow: 'hidden',
   borderRadius: `${theme.spacing(1)} ${theme.spacing(1)} 0 0`,
-}));
-
-const InstructorAvatar = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  bottom: theme.spacing(-2),
-  left: theme.spacing(2),
-  width: 32,
-  height: 32,
-  borderRadius: '50%',
-  overflow: 'hidden',
-  border: '2px solid white',
-  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-  '& img': {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-  },
 }));
 
 const StatusChip = styled(Chip)(({ theme }) => ({

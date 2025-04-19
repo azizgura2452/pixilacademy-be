@@ -29,7 +29,13 @@ async function getCourseBySlug(slug: string): Promise<Course | null> {
   return json?.docs?.[0] || null;
 }
 
-export default async function CourseDetailPage({ params }: { params: { slug: string } }) {
+interface CourseDetailPageProps {
+  params: {
+    slug: string;
+  }
+}
+
+export default async function CourseDetailPage({ params }: CourseDetailPageProps) {
   const course = await getCourseBySlug(params.slug);
 
   if (!course) {
@@ -49,20 +55,20 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
       </Box>
 
       <Box sx={{ mt: 3 }}>
-        <Typography variant="h4" fontWeight={700} sx={{color: "#000000"}}>
+        <Typography variant="h4" fontWeight={700} sx={{ color: '#000000' }}>
           {course.title}
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, gap: 2 }}>
-          <Chip label={course.category} color="primary" size="small" sx={{textTransform: 'capitalize'}} />
-          <Chip label={course.level} variant="outlined" size="small" sx={{textTransform: 'capitalize'}} />
+          <Chip label={course.category} color="primary" size="small" sx={{ textTransform: 'capitalize' }} />
+          <Chip label={course.level} variant="outlined" size="small" sx={{ textTransform: 'capitalize' }} />
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <AccessTimeIcon fontSize="small" sx={{ mr: 0.5,color: '#000000' }} />
-            <Typography variant="body2" sx={{color: "#000000"}}>{course.duration}</Typography>
+            <AccessTimeIcon fontSize="small" sx={{ mr: 0.5, color: '#000000' }} />
+            <Typography variant="body2" sx={{ color: '#000000' }}>{course.duration}</Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <StarIcon sx={{ color: '#FFCE31', fontSize: '1rem', mr: 0.5 }} />
-            <Typography variant="body2" fontWeight={600}  sx={{color: "#000000"}}>4.9</Typography>
+            <Typography variant="body2" fontWeight={600} sx={{ color: '#000000' }}>4.9</Typography>
           </Box>
         </Box>
 

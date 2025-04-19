@@ -7,13 +7,13 @@ import {
   Container,
   Box,
   styled,
-  useTheme,
   MenuItem,
   Select,
   FormControl
 } from '@mui/material';
 import Link from 'next/link';
 import { getGlobalsSettings } from '@/utils/api';
+import { SiteSetting } from '@/payload-types';
 
 const StyledAppBar = styled(AppBar)({
   backgroundColor: '#A1C0F1',
@@ -30,7 +30,7 @@ const BrandTypography = styled(Typography)({
 });
 
 const Navbar: React.FC = () => {
-  const [siteSettings, setSiteSettings] = useState<any>({});
+  const [siteSettings, setSiteSettings] = useState<SiteSetting>();
   const [locale, setLocale] = useState<string>('en');
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
     });
   }, []);
 
-  const handleLanguageChange = (event: any) => {
+  const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedLocale = event.target.value;
     setLocale(selectedLocale);
     if(typeof window !== 'undefined')
@@ -71,7 +71,7 @@ const Navbar: React.FC = () => {
               sx={{ bgcolor: 'white' }}
             >
               <MenuItem value="en">English</MenuItem>
-              <MenuItem value="ar">Arabic</MenuItem>
+              <MenuItem value="ar">عربي</MenuItem>
             </Select>
           </FormControl>
         </Toolbar>

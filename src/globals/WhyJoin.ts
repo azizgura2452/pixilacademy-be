@@ -3,6 +3,9 @@ import type { GlobalConfig } from 'payload';
 
 export const WhyJoin: GlobalConfig = {
   slug: 'why-join',
+  admin: {
+    hidden: ({ user }) => user?.role !== 'admin',
+  },
   access: {
     read: () => true,
     update: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'editor',

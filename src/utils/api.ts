@@ -1,6 +1,6 @@
 'use client';
 
-export const API_URL = process.env.NEXT_PUBLIC_PAYLOAD_URL || 'http://localhost:3000';
+export const API_URL = process.env.API_URL;
 
 const fetchFromPayload = async (path: string) => {
   try {

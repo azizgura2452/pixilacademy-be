@@ -345,6 +345,8 @@ export interface HeroSection {
         image?: (string | null) | Media;
         altText?: string | null;
         size?: number | null;
+        positionX?: number | null;
+        positionY?: number | null;
         id?: string | null;
       }[]
     | null;
@@ -408,6 +410,8 @@ export interface HeroSectionSelect<T extends boolean = true> {
         image?: T;
         altText?: T;
         size?: T;
+        positionX?: T;
+        positionY?: T;
         id?: T;
       };
   updatedAt?: T;

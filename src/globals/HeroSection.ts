@@ -3,6 +3,9 @@ import type { GlobalConfig } from 'payload';
 
 export const HeroSection: GlobalConfig = {
   slug: 'hero-section',
+  admin: {
+    hidden: ({ user }) => user?.role !== 'admin',
+  },
   access: {
     read: () => true,
     update: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'editor',
@@ -41,6 +44,14 @@ export const HeroSection: GlobalConfig = {
             name: 'size',
             type: 'number',
           },
+        {
+          name: 'positionX',
+          type: 'number'
+        },
+        {
+          name: 'positionY',
+          type: 'number'
+        }
       ],
     },
   ],

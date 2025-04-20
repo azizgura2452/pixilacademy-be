@@ -1,45 +1,47 @@
-import { Box, Typography, Chip, Button, Divider } from '@mui/material';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import StarIcon from '@mui/icons-material/Star';
-import Image from 'next/image';
-import { API_URL } from '@/utils/api';
+import { Box, Typography, Chip, Button, Divider } from '@mui/material'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import StarIcon from '@mui/icons-material/Star'
+import Image from 'next/image'
+import { notFound } from 'next/navigation'
 
 interface Course {
-  id: string;
-  title: string;
-  category?: string;
-  description?: string;
+  id: string
+  title: string
+  slug: string
+  category?: string
+  description?: string
   thumbnail?: {
-    url: string;
-  };
-  duration: string;
-  level: string;
-  price: number;
-  sale_price?: number;
-  isNew?: boolean;
-}
-
-async function getCourseBySlug(slug: string): Promise<Course | null> {
-  const res = await fetch(
-    `${API_URL}/api/courses?where[slug][equals]=${slug}`,
-    { next: { revalidate: 60 } } // caching optional
-  );
-
-  const json = await res.json();
-  return json?.docs?.[0] || null;
-}
-
-interface CourseDetailPageProps {
-  params: {
-    slug: string;
+    url: string
   }
+  duration: string
+  level: string
+  price: number
+  sale_price?: number
+  isNew?: boolean
 }
 
-export default async function CourseDetailPage({ params }: CourseDetailPageProps) {
-  const course = await getCourseBySlug(params.slug);
+const API_URL = process.env.API_URL!
+
+export async function generateStaticParams() {
+  const res = await fetch(`${API_URL}/api/courses`)
+  const json = await res.json()
+
+  return (
+    json?.docs?.map((course: Course) => ({
+      slug: course.slug,
+    })) || []
+  )
+}
+
+// ✅ Called at runtime per slug
+export default async function CourseDetailPage({ params }: { params: { slug: string } }) {
+  const res = await fetch(`${API_URL}/api/courses?where[slug][equals]=${params.slug}`)
+  const json = await res.json()
+
+  const course: Course | null = json?.docs?.[0] || null
 
   if (!course) {
-    return <Typography>Course not found.</Typography>;
+    notFound() // ✅ tells Next to render the 404 page
   }
 
   return (
@@ -60,15 +62,29 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, gap: 2 }}>
-          <Chip label={course.category} color="primary" size="small" sx={{ textTransform: 'capitalize' }} />
-          <Chip label={course.level} variant="outlined" size="small" sx={{ textTransform: 'capitalize' }} />
+          <Chip
+            label={course.category}
+            color="primary"
+            size="small"
+            sx={{ textTransform: 'capitalize' }}
+          />
+          <Chip
+            label={course.level}
+            variant="outlined"
+            size="small"
+            sx={{ textTransform: 'capitalize' }}
+          />
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <AccessTimeIcon fontSize="small" sx={{ mr: 0.5, color: '#000000' }} />
-            <Typography variant="body2" sx={{ color: '#000000' }}>{course.duration}</Typography>
+            <Typography variant="body2" sx={{ color: '#000000' }}>
+              {course.duration}
+            </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <StarIcon sx={{ color: '#FFCE31', fontSize: '1rem', mr: 0.5 }} />
-            <Typography variant="body2" fontWeight={600} sx={{ color: '#000000' }}>4.9</Typography>
+            <Typography variant="body2" fontWeight={600} sx={{ color: '#000000' }}>
+              4.9
+            </Typography>
           </Box>
         </Box>
 
@@ -102,5 +118,5 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
         </Box>
       </Box>
     </Box>
-  );
+  )
 }

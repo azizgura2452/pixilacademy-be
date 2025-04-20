@@ -33,7 +33,6 @@ export async function generateStaticParams() {
   )
 }
 
-// ✅ Called at runtime per slug
 export default async function CourseDetailPage({ params }: { params: { slug: string } }) {
   const res = await fetch(`${API_URL}/api/courses?where[slug][equals]=${params.slug}`)
   const json = await res.json()
@@ -41,7 +40,7 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
   const course: Course | null = json?.docs?.[0] || null
 
   if (!course) {
-    notFound() // ✅ tells Next to render the 404 page
+    notFound()
   }
 
   return (

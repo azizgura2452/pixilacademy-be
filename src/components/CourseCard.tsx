@@ -1,41 +1,30 @@
-import React from 'react'
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  CardMedia,
-  Chip,
-  IconButton,
-  Button,
-  styled,
-} from '@mui/material'
-import StarIcon from '@mui/icons-material/Star'
-import AccessTimeIcon from '@mui/icons-material/AccessTime'
-import { Favorite, ShoppingCart, Visibility } from '@mui/icons-material'
-import Link from 'next/link'
-import { getImageSrc } from '@/utils/common'
+import React from 'react';
+import { Box, Typography, Card, CardContent, CardMedia, Chip, IconButton, Button, styled } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { Favorite, ShoppingCart, Visibility } from '@mui/icons-material';
+import Link from 'next/link';
 
 interface Image {
-  url: string
+  url: string;
 }
 
 interface Course {
-  id: string
-  title: string
-  category?: string
-  description?: string
-  thumbnail?: Image
-  duration: string
-  level: string
-  price: number
-  sale_price?: number
-  isNew?: boolean
-  slug: string
+  id: string;
+  title: string;
+  category?: string;
+  description?: string;
+  thumbnail?: Image;
+  duration: string;
+  level: string;
+  price: number;
+  sale_price?: number;
+  isNew?: boolean;
+  slug: string;
 }
 
 interface CourseCardProps {
-  course: Course
+  course: Course;
 }
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -45,20 +34,20 @@ const StyledCard = styled(Card)(({ theme }) => ({
   height: '300px',
   display: 'flex',
   flexDirection: 'column',
-}))
+}));
 
 const CourseMediaWrapper = styled(Box)(({ theme }) => ({
   position: 'relative',
   overflow: 'hidden',
   borderRadius: `${theme.spacing(1)} ${theme.spacing(1)} 0 0`,
-}))
+}));
 
 const StatusChip = styled(Chip)(({ theme }) => ({
   position: 'absolute',
   top: theme.spacing(1),
   right: theme.spacing(1),
   fontWeight: 600,
-}))
+}));
 
 const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
   return (
@@ -67,7 +56,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
       <CourseMediaWrapper sx={{ position: 'relative', width: 240 }}>
         <CardMedia
           component="img"
-          image={getImageSrc(course.thumbnail?.url || '/assets/placeholder.webp')}
+          image={course.thumbnail?.url || `/api/placeholder/400/240`}
           alt={course.title}
           sx={{ height: '100%', objectFit: 'cover', objectPosition: 'center' }}
         />
@@ -98,22 +87,9 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
       </CourseMediaWrapper>
 
       {/* RIGHT: Content */}
-      <CardContent
-        sx={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between',
-          py: 2,
-        }}
-      >
+      <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', py: 2 }}>
         <Box>
-          <Box
-            display={'flex'}
-            flexDirection="row"
-            justifyContent={'space-between'}
-            alignItems={'flex-start'}
-          >
+          <Box display={'flex'} flexDirection="row" justifyContent={"space-between"} alignItems={"flex-start"}>
             <Typography
               variant="h6"
               sx={{
@@ -121,7 +97,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
                 fontSize: '0.8rem',
                 mb: 1,
                 textTransform: 'capitalize',
-                color: '#23A6F0',
+                color: '#23A6F0'
               }}
             >
               {course.category}
@@ -136,10 +112,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
           <Typography variant="h6" sx={{ fontWeight: 600, fontSize: '1.1rem', mb: 1 }}>
             {course.title}
           </Typography>
-          <Typography
-            variant="body2"
-            sx={{ fontWeight: 400, fontSize: '14px', mb: 1, maxWidth: 200 }}
-          >
+          <Typography variant="body2" sx={{ fontWeight: 400, fontSize: '14px', mb: 1, maxWidth: 200 }}>
             {(course.description as string)?.substring(0, 130)}
           </Typography>
         </Box>
@@ -159,7 +132,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
               py: 0.5,
               borderRadius: 1,
               fontWeight: 600,
-              textTransform: 'uppercase',
+              textTransform: 'uppercase'
             }}
           >
             {course.level}
@@ -170,16 +143,10 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
           <Box>
             {course.sale_price ? (
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography
-                  variant="h4"
-                  sx={{ textDecoration: 'line-through', color: '#999', fontSize: '20px' }}
-                >
+                <Typography variant="h4" sx={{ textDecoration: 'line-through', color: '#999', fontSize: '20px' }}>
                   ${course.price}
                 </Typography>
-                <Typography
-                  variant="h4"
-                  sx={{ fontWeight: 700, color: '#40BB15', ml: 1, fontSize: '20px' }}
-                >
+                <Typography variant="h4" sx={{ fontWeight: 700, color: '#40BB15', ml: 1, fontSize: '20px' }}>
                   ${course.sale_price}
                 </Typography>
               </Box>
@@ -190,23 +157,23 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
             )}
           </Box>
           <Link href={`/courses/${course.slug}`} style={{ textDecoration: 'none' }}>
-            <Button
-              variant="outlined"
-              size="small"
-              sx={{
-                borderRadius: 4,
-                fontWeight: 600,
-                px: 2,
-                textTransform: 'none',
-              }}
-            >
-              Learn More
-            </Button>
+          <Button
+            variant="outlined"
+            size="small"
+            sx={{
+              borderRadius: 4,
+              fontWeight: 600,
+              px: 2,
+              textTransform: 'none',
+            }}
+          >
+            Learn More
+          </Button>
           </Link>
         </Box>
       </CardContent>
     </StyledCard>
-  )
-}
+  );
+};
 
-export default CourseCard
+export default CourseCard;

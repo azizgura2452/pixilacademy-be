@@ -1,24 +1,23 @@
-import React from 'react'
-import { Box, Typography, styled, keyframes } from '@mui/material'
-import Image from 'next/image'
-import { getImageSrc } from '@/utils/common'
+import React from 'react';
+import { Box, Typography, styled, keyframes } from '@mui/material';
+import Image from 'next/image';
 
 interface Profile {
-  id: string
+  id: string;
   image: {
-    url: string
-  }
-  positionX: number
-  positionY: number
-  size?: number
-  animate?: boolean
+    url: string;
+  };
+  positionX: number;
+  positionY: number;
+  size?: number;
+  animate?: boolean;
 }
 
 interface HeroSectionProps {
-  title?: string
-  heading?: string
-  subtext?: string
-  avatars?: Profile[]
+  title?: string;
+  heading?: string;
+  subtext?: string;
+  avatars?: Profile[];
 }
 
 // Animation keyframes
@@ -29,7 +28,7 @@ const float = keyframes`
   50% {
     transform: translateY(-10px);
   }
-`
+`;
 
 const pulse = keyframes`
   0% {
@@ -41,7 +40,7 @@ const pulse = keyframes`
   100% {
     transform: scale(1);
   }
-`
+`;
 
 const HeroWrapper = styled(Box)(({ theme }) => ({
   padding: theme.spacing(10, 10),
@@ -53,22 +52,22 @@ const HeroWrapper = styled(Box)(({ theme }) => ({
   backgroundColor: '#E8F1FF',
   width: '100%',
   direction: 'ltr',
-}))
+}));
 
 const ContentWrapper = styled(Box)(() => ({
   maxWidth: '50%',
-}))
+}));
 
 const ProfileBubble = styled(Box, {
   shouldForwardProp: (prop) =>
     !['top', 'left', 'bubbleSize', 'animate', 'animationType', 'delay'].includes(prop as string),
 })<{
-  top: number
-  left: number
-  bubbleSize: number
-  animate: boolean
-  animationType: 'float' | 'pulse'
-  delay: number
+  top: number;
+  left: number;
+  bubbleSize: number;
+  animate: boolean;
+  animationType: 'float' | 'pulse';
+  delay: number;
 }>(({ top, left, bubbleSize, animate, animationType, delay }) => ({
   position: 'absolute',
   top: `${top}%`,
@@ -88,11 +87,11 @@ const ProfileBubble = styled(Box, {
     height: '100%',
     objectFit: 'cover',
   },
-}))
+}));
 
 const HeroSection: React.FC<HeroSectionProps> = ({ title, heading, subtext, avatars = [] }) => {
-  const getAnimationType = () => (Math.random() > 0.5 ? 'float' : 'pulse')
-  const getAnimationDelay = () => Math.random() * 2
+  const getAnimationType = () => (Math.random() > 0.5 ? 'float' : 'pulse');
+  const getAnimationDelay = () => Math.random() * 2;
 
   const defaultProfiles = [
     { id: '1', position: { x: 65, y: 30 }, size: 40 },
@@ -100,10 +99,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, heading, subtext, avat
     { id: '3', position: { x: 60, y: 50 }, size: 44 },
     { id: '4', position: { x: 80, y: 40 }, size: 38 },
     { id: '5', position: { x: 70, y: 60 }, size: 40 },
-  ]
+  ];
 
-  const isRtl =
-    typeof document !== 'undefined' && document?.documentElement?.getAttribute('dir') === 'rtl'
+  const isRtl = typeof document !== 'undefined' && document?.documentElement?.getAttribute('dir') === 'rtl';
 
   return (
     <HeroWrapper>
@@ -160,7 +158,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, heading, subtext, avat
           delay={getAnimationDelay()}
         >
           <Image
-            src={getImageSrc(avatar.image?.url || '/assets/placeholder.webp')}
+            src={avatar.image?.url || 'https://thumbs.dreamstime.com/b/portrait-young-handsome-happy-man-wearing-glasses-casual-smart-blue-clothing-yellow-color-background-square-composition-200740125.jpg'}
             alt="Student profile"
             width={avatar.size || 40}
             height={avatar.size || 40}
@@ -168,7 +166,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, heading, subtext, avat
         </ProfileBubble>
       ))}
     </HeroWrapper>
-  )
-}
+  );
+};
 
-export default HeroSection
+export default HeroSection;

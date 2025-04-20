@@ -3,7 +3,6 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import StarIcon from '@mui/icons-material/Star'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { getImageSrc } from '@/utils/common'
 
 interface Course {
   id: string
@@ -48,7 +47,7 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
     <Box sx={{ maxWidth: 900, mx: 'auto', mt: 4, p: 2 }}>
       <Box sx={{ borderRadius: 2, overflow: 'hidden', boxShadow: 2 }}>
         <Image
-          src={getImageSrc(course.thumbnail?.url || '/assets/placeholder.webp')}
+          src={course.thumbnail?.url || '/api/placeholder/800/400'}
           alt={course.title}
           width={800}
           height={400}

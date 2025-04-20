@@ -17,9 +17,15 @@ const nextConfig = {
   output: 'standalone',
   images: {
     remotePatterns: [
-      new URL('http://localhost:3000/**'),
-      new URL('https://pixilacademy-be.vercel.app/**'),
-    ],
+      {
+        protocol: 'http',
+        hostname: 'localhost:3000'
+      },
+      {
+        protocol: 'https',
+        hostname: 'pixilacademy-be.vercel.app'
+      },
+    ]
   },
 }
 

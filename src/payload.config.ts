@@ -31,7 +31,7 @@ export default buildConfig({
           exportName: 'Logout',
         },
       },
-    }
+    },
   },
   collections: [Courses, Users, Media],
   globals: [HeroSection, WhyJoin, CoursesSection, SiteSettings],
@@ -57,12 +57,10 @@ export default buildConfig({
       {
         label: 'Arabic',
         code: 'ar',
-        // opt-in to setting default text-alignment on Input fields to rtl (right-to-left)
-        // when current locale is rtl
         rtl: true,
       },
     ],
-    defaultLocale: 'en', // required
-    fallback: true, // defaults to true
+    defaultLocale: 'en',
+    fallback: true,
   },
 })

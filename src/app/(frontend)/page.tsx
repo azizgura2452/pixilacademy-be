@@ -1,42 +1,41 @@
-'use client';
+'use client'
 
-import React, { useEffect, useState } from 'react';
-import { Box, Container } from '@mui/material';
-import HeroSection from '@/components/HeroSection';
-import { getCourses, getGlobals } from '@/utils/api';
-import WhyJoinSection from '@/components/WhyJoinSection';
-import CourseSection from '@/components/CourseSection';
-import Image from 'next/image';
+import React, { useEffect, useState } from 'react'
+import { Box, Container } from '@mui/material'
+import HeroSection from '@/components/HeroSection'
+import { getCourses, getGlobals } from '@/utils/api'
+import WhyJoinSection from '@/components/WhyJoinSection'
+import CourseSection from '@/components/CourseSection'
+import Image from 'next/image'
 
 const CoursesPage: React.FC = () => {
-  const [heroData, setHeroData] = useState([]);
-  const [whyJoinData, setWhyJoinData] = useState([]);
-  const [courseSectionData, setCourseSectionData] = useState([]);
-  const [coursesData, setCourseData] = useState([]);
-  const [loading, setLoading] = useState(true); // 👈 loader state
+  const [heroData, setHeroData] = useState([])
+  const [whyJoinData, setWhyJoinData] = useState([])
+  const [courseSectionData, setCourseSectionData] = useState([])
+  const [coursesData, setCourseData] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const globals = await getGlobals();
-        setHeroData(globals.hero || []);
-        setWhyJoinData(globals.whyJoin || []);
-        setCourseSectionData(globals.coursesSection || []);
-        console.log(globals.hero);
+        const globals = await getGlobals()
+        setHeroData(globals.hero || [])
+        setWhyJoinData(globals.whyJoin || [])
+        setCourseSectionData(globals.coursesSection || [])
+        console.log(globals.hero)
         console.log(globals.whyJoin)
         console.log(globals.coursesSection)
       } catch (err) {
-        console.error('Failed to fetch globals:', err);
+        console.error('Failed to fetch globals:', err)
       } finally {
-        setLoading(false); // 👈 hide loader after globals are fetched
+        setLoading(false)
       }
-    };
+    }
 
-    fetchData();
+    fetchData()
 
-    // Courses can load in background
-    getCourses().then((res) => setCourseData(res));
-  }, []);
+    getCourses().then((res) => setCourseData(res))
+  }, [])
 
   if (loading) {
     return (
@@ -72,27 +71,27 @@ const CoursesPage: React.FC = () => {
           }
         `}</style>
       </Box>
-    );
-  }  
+    )
+  }
 
   return (
     <Box sx={{ bgcolor: '#f5f7ff' }}>
       <Container maxWidth="xl" sx={{ padding: '0 !important' }}>
-        <HeroSection 
-          title={heroData.label} 
+        <HeroSection
+          title={heroData.label}
           heading={heroData.headline}
           subtext={heroData.subtext}
           avatars={heroData.avatars}
         />
-        
-        <WhyJoinSection 
+
+        <WhyJoinSection
           title={whyJoinData.title}
           heading={whyJoinData.heading}
           description={whyJoinData.description}
           features={whyJoinData.features}
         />
-        
-        <CourseSection 
+
+        <CourseSection
           title={courseSectionData.title}
           heading={courseSectionData.heading}
           description={courseSectionData.description}
@@ -100,7 +99,7 @@ const CoursesPage: React.FC = () => {
         />
       </Container>
     </Box>
-  );
-};
+  )
+}
 
-export default CoursesPage;
+export default CoursesPage

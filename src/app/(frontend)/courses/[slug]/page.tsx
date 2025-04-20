@@ -3,13 +3,17 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import StarIcon from '@mui/icons-material/Star'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
+import { cookies } from 'next/headers'
+import { getImageSrc } from '@/utils/common'
+import { SerializedEditorState, SerializedLexicalNode } from '@payloadcms/richtext-lexical/lexical'
+import { RichText } from '@payloadcms/richtext-lexical/react'
 
 interface Course {
   id: string
   title: string
   slug: string
   category?: string
-  description?: string
+  description?: SerializedEditorState | string
   thumbnail?: {
     url: string
   }
@@ -34,7 +38,14 @@ export async function generateStaticParams() {
 }
 
 export default async function CourseDetailPage({ params }: { params: { slug: string } }) {
-  const res = await fetch(`${API_URL}/api/courses?where[slug][equals]=${params.slug}`)
+  const cookieStore = cookies()
+  const locale = cookieStore.get('locale')?.value || 'en'
+  const paramSlug = await params
+
+  const res = await fetch(
+    `${API_URL}/api/courses?where[slug][equals]=${paramSlug.slug}&locale=${locale}`,
+    { cache: 'no-store' },
+  )
   const json = await res.json()
 
   const course: Course | null = json?.docs?.[0] || null
@@ -43,24 +54,31 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
     notFound()
   }
 
+  const description =
+    typeof course.description === 'string'
+      ? (JSON.parse(course.description) as SerializedEditorState)
+      : course.description
+
   return (
-    <Box sx={{ maxWidth: 900, mx: 'auto', mt: 4, p: 2 }}>
-      <Box sx={{ borderRadius: 2, overflow: 'hidden', boxShadow: 2 }}>
+    <Box sx={{ maxWidth: 1000, mx: 'auto', mt: 4, p: { xs: 2, sm: 3 } }}>
+      {/* Course Image */}
+      <Box sx={{ borderRadius: 3, overflow: 'hidden', boxShadow: 3 }}>
         <Image
-          src={course.thumbnail?.url || '/api/placeholder/800/400'}
+          src={getImageSrc(course?.thumbnail?.url as string)}
           alt={course.title}
-          width={800}
-          height={400}
-          style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+          width={1000}
+          height={320}
+          style={{ width: '100%', height: '320px', objectFit: 'cover', objectPosition: 'center' }}
         />
       </Box>
 
-      <Box sx={{ mt: 3 }}>
-        <Typography variant="h4" fontWeight={700} sx={{ color: '#000000' }}>
+      {/* Course Info */}
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h3" fontWeight={700} sx={{ color: '#111827', mb: 2 }}>
           {course.title}
         </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, gap: 2 }}>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'center' }}>
           <Chip
             label={course.category}
             color="primary"
@@ -74,44 +92,65 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
             sx={{ textTransform: 'capitalize' }}
           />
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <AccessTimeIcon fontSize="small" sx={{ mr: 0.5, color: '#000000' }} />
-            <Typography variant="body2" sx={{ color: '#000000' }}>
+            <AccessTimeIcon fontSize="small" sx={{ mr: 0.5, color: '#555' }} />
+            <Typography variant="body2" color="#555">
               {course.duration}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <StarIcon sx={{ color: '#FFCE31', fontSize: '1rem', mr: 0.5 }} />
-            <Typography variant="body2" fontWeight={600} sx={{ color: '#000000' }}>
+            <Typography variant="body2" fontWeight={600} color="#555">
               4.9
             </Typography>
           </Box>
         </Box>
 
-        <Divider sx={{ my: 2 }} />
+        <Divider sx={{ my: 3 }} />
 
-        <Typography variant="body1" sx={{ color: '#444' }}>
-          {course.description}
-        </Typography>
+        {/* Rich Description */}
+        <Box
+          sx={{
+            color: '#333',
+            lineHeight: 1.7,
+            fontSize: '1rem',
+            '& *': { fontFamily: 'inherit !important' },
+          }}
+        >
+          <RichText
+            data={course?.description as unknown as SerializedEditorState<SerializedLexicalNode>}
+          />
+        </Box>
 
-        <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Box>
+        {/* Pricing + CTA */}
+        <Box sx={{ mt: 5, textAlign: 'center' }}>
+          <Typography variant="h4" fontWeight={700} sx={{ color: '#1F2937', mb: 1 }}>
             {course.sale_price ? (
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography sx={{ textDecoration: 'line-through', color: '#888', mr: 1 }}>
+              <>
+                <span style={{ textDecoration: 'line-through', color: '#888', marginRight: 12 }}>
                   ${course.price}
-                </Typography>
-                <Typography variant="h6" sx={{ color: '#40BB15' }}>
-                  ${course.sale_price}
-                </Typography>
-              </Box>
+                </span>
+                <span style={{ color: '#10B981' }}>${course.sale_price}</span>
+              </>
             ) : (
-              <Typography variant="h6" sx={{ color: '#1a1a2e' }}>
-                ${course.price}
-              </Typography>
+              <>${course.price}</>
             )}
-          </Box>
+          </Typography>
 
-          <Button variant="contained" color="primary" sx={{ borderRadius: 2, px: 3 }}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            sx={{
+              mt: 3,
+              px: 5,
+              py: 1.5,
+              fontSize: '1rem',
+              fontWeight: 600,
+              borderRadius: 3,
+              boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+              textTransform: 'none',
+            }}
+          >
             Enroll Now
           </Button>
         </Box>

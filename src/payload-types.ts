@@ -132,7 +132,22 @@ export interface UserAuthOperations {
 export interface Course {
   id: string;
   title: string;
-  description: string;
+  shortDescription: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   price: string;
   sale_price?: string | null;
   slug: string;
@@ -250,6 +265,7 @@ export interface PayloadMigration {
  */
 export interface CoursesSelect<T extends boolean = true> {
   title?: T;
+  shortDescription?: T;
   description?: T;
   price?: T;
   sale_price?: T;

@@ -15,6 +15,12 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   output: 'standalone',
+  images: {
+    remotePatterns: [
+      new URL('http://localhost:3000/**'),
+      new URL('https://pixilacademy-be.vercel.app/**'),
+    ],
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

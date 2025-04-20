@@ -5,7 +5,7 @@ export const courseBySlugEndpoint: Endpoint = {
   path: '/courses/slug/:slug',
   method: 'get',
   handler: async ({ req, params }) => {
-    const payloadReq = req as PayloadRequest // 👈 this gives you `.payload` access
+    const payloadReq = req as PayloadRequest
 
     const slug = params.slug
 
@@ -19,21 +19,15 @@ export const courseBySlugEndpoint: Endpoint = {
     })
 
     if (!course.docs.length) {
-      return new Response(
-        JSON.stringify({ message: 'Course not found' }),
-        {
-          status: 404,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      )
+      return new Response(JSON.stringify({ message: 'Course not found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' },
+      })
     }
 
-    return new Response(
-      JSON.stringify(course.docs[0]),
-      {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    )
+    return new Response(JSON.stringify(course.docs[0]), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    })
   },
 }

@@ -1,4 +1,5 @@
-import type { CollectionConfig } from 'payload';
+import type { CollectionConfig } from 'payload'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 export const Courses: CollectionConfig = {
   slug: 'courses',
@@ -6,7 +7,7 @@ export const Courses: CollectionConfig = {
     useAsTitle: 'title',
   },
   access: {
-    read: () => true, // Public read access (you can secure this later if needed)
+    read: () => true,
     create: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'editor',
     update: ({ req: { user } }) => user?.role === 'admin' || user?.role === 'editor',
     delete: ({ req: { user } }) => user?.role === 'admin',
@@ -19,21 +20,28 @@ export const Courses: CollectionConfig = {
       localized: true,
     },
     {
-      name: 'description',
+      name: 'shortDescription',
       type: 'textarea',
       required: true,
       localized: true,
     },
     {
-        name: 'price',
-        type: 'text',
-        required: true,
+      name: 'description',
+      type: 'richText',
+      required: true,
+      localized: true,
+      editor: lexicalEditor({}),
     },
     {
-        name: 'sale_price',
-        type: 'text',
-        required: false,
-        label: 'Sale Price'
+      name: 'price',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'sale_price',
+      type: 'text',
+      required: false,
+      label: 'Sale Price',
     },
     {
       name: 'slug',
@@ -42,15 +50,15 @@ export const Courses: CollectionConfig = {
       unique: true,
     },
     {
-        name: 'duration',
-        type: 'text',
-        required: false,
-        localized: true,
+      name: 'duration',
+      type: 'text',
+      required: false,
+      localized: true,
     },
     {
-        name: 'lessons',
-        type: 'number',
-        required: false,
+      name: 'lessons',
+      type: 'number',
+      required: false,
     },
     {
       name: 'category',
@@ -77,7 +85,7 @@ export const Courses: CollectionConfig = {
     {
       name: 'thumbnail',
       type: 'upload',
-      relationTo: 'media', // assumes you have a 'media' collection for uploads
+      relationTo: 'media',
       required: false,
     },
     {
@@ -89,4 +97,4 @@ export const Courses: CollectionConfig = {
   versions: {
     drafts: true,
   },
-};
+}

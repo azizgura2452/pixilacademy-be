@@ -1,27 +1,28 @@
 // components/courses/JoinReasons.tsx
-import React from 'react';
-import { Box, Typography, Paper, styled, Grid } from '@mui/material';
-import Image from 'next/image';
+import React from 'react'
+import { Box, Typography, Paper, styled, Grid } from '@mui/material'
+import Image from 'next/image'
+import { getImageSrc } from '@/utils/common'
 
 interface Feature {
-  id: string;
-  title: string;
-  description: string;
+  id: string
+  title: string
+  description: string
   icon: {
-    url: string;
-  };
+    url: string
+  }
 }
 
 interface JoinReasonsProps {
-  title?: string;
-  heading?: string;
-  description?: string;
-  features?: Feature[];
+  title?: string
+  heading?: string
+  description?: string
+  features?: Feature[]
 }
 
 const SectionWrapper = styled(Box)(({ theme }) => ({
   padding: theme.spacing(10, 10),
-}));
+}))
 
 const ReasonCard = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(6, 4),
@@ -33,7 +34,7 @@ const ReasonCard = styled(Paper)(({ theme }) => ({
     transform: 'translateY(-4px)',
     boxShadow: '0 8px 16px rgba(0,0,0,0.1)',
   },
-}));
+}))
 
 const IconBox = styled(Box)(({ theme }) => ({
   width: 72,
@@ -44,67 +45,68 @@ const IconBox = styled(Box)(({ theme }) => ({
   justifyContent: 'center',
   marginBottom: theme.spacing(2),
   color: 'white',
-}));
+}))
 
-const WhyJoinSection: React.FC<JoinReasonsProps> = ({ title, heading, description, features = [] }) => {
-  const displayReasons = features.length > 0 ? features : [];
+const WhyJoinSection: React.FC<JoinReasonsProps> = ({
+  title,
+  heading,
+  description,
+  features = [],
+}) => {
+  const displayReasons = features.length > 0 ? features : []
 
   return (
     <SectionWrapper>
-      <Typography 
-        variant="subtitle1" 
-        component="h2" 
-        sx={{ 
-          fontWeight: 600, 
+      <Typography
+        variant="subtitle1"
+        component="h2"
+        sx={{
+          fontWeight: 600,
           mb: 1,
           color: '#23A6F0',
-          fontSize: '16px'
+          fontSize: '16px',
         }}
       >
         {title}
       </Typography>
-      <Typography 
-        variant="h4" 
-        component="h3" 
-        sx={{ 
-          fontWeight: 700, 
+      <Typography
+        variant="h4"
+        component="h3"
+        sx={{
+          fontWeight: 700,
           mb: 1,
-          color: '#1a1a2e'
+          color: '#1a1a2e',
         }}
       >
-        {heading || "Why you should join this?"}
+        {heading || 'Why you should join this?'}
       </Typography>
-      <Typography 
-        variant="caption" 
-        component="p" 
-        sx={{ 
-          fontWeight: 400, 
+      <Typography
+        variant="caption"
+        component="p"
+        sx={{
+          fontWeight: 400,
           mb: 4,
           color: '#737373',
-          width: { xs: '100%', md: '40%' }
+          width: { xs: '100%', md: '40%' },
         }}
       >
-        {description || ""}
+        {description || ''}
       </Typography>
 
       <Grid container spacing={3}>
         {displayReasons.map((reason) => (
           <Grid size={4} key={reason.id}>
             <ReasonCard>
-              <IconBox sx={{ bgcolor: "#23A6F0" }}>
+              <IconBox sx={{ bgcolor: '#23A6F0' }}>
                 <Image
-                  src={reason.icon.url}
+                  src={getImageSrc(reason.icon?.url || '/assets/placeholder.webp')}
                   alt={reason.title}
                   width={32}
                   height={32}
                   style={{ objectFit: 'contain' }}
                 />
               </IconBox>
-              <Typography 
-                variant="h6" 
-                component="h4" 
-                sx={{ fontWeight: 600, mb: 1 }}
-              >
+              <Typography variant="h6" component="h4" sx={{ fontWeight: 600, mb: 1 }}>
                 {reason.title}
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -115,7 +117,7 @@ const WhyJoinSection: React.FC<JoinReasonsProps> = ({ title, heading, descriptio
         ))}
       </Grid>
     </SectionWrapper>
-  );
-};
+  )
+}
 
-export default WhyJoinSection;
+export default WhyJoinSection

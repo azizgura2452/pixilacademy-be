@@ -19,14 +19,15 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: 'localhost:3000'
+        hostname: 'localhost:3000',
       },
       {
         protocol: 'https',
-        hostname: 'pixilacademy-be.vercel.app'
+        hostname: 'pixilacademy-be.vercel.app',
       },
-    ]
+    ],
   },
+  productionBrowserSourceMaps: true,
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

@@ -47,11 +47,7 @@ const CourseSection: React.FC<CoursesListProps> = ({
       <Typography variant="h4" component="h3" sx={{ fontWeight: 700, mb: 1, color: '#1a1a2e' }}>
         {heading || 'Why you should join this?'}
       </Typography>
-      <Typography
-        variant="caption"
-        component="p"
-        sx={{ fontWeight: 400, mb: 4, color: '#737373', width: '40%' }}
-      >
+      <Typography variant="caption" component="p" sx={{ fontWeight: 400, mb: 4, color: '#737373' }}>
         {description || ''}
       </Typography>
 

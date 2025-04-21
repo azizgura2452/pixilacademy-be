@@ -95,7 +95,7 @@ const WhyJoinSection: React.FC<JoinReasonsProps> = ({
 
       <Grid container spacing={3}>
         {displayReasons.map((reason) => (
-          <Grid size={4} key={reason.id}>
+          <Grid size={{ xs: 12, sm: 4, md: 4 }} key={reason.id}>
             <ReasonCard>
               <IconBox sx={{ bgcolor: '#23A6F0' }}>
                 <Image
@@ -108,6 +108,7 @@ const WhyJoinSection: React.FC<JoinReasonsProps> = ({
                     target.src = '/assets/placeholder.webp'
                   }}
                   style={{ objectFit: 'contain' }}
+                  unoptimized
                 />
               </IconBox>
               <Typography variant="h6" component="h4" sx={{ fontWeight: 600, mb: 1 }}>

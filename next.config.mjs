@@ -19,11 +19,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: 'localhost:3000',
+        hostname: '**',
       },
       {
         protocol: 'https',
-        hostname: 'pixilacademy-be.vercel.app',
+        hostname: '**',
       },
     ],
   },

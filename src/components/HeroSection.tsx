@@ -137,7 +137,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, heading, subtext, avat
           sx={{
             color: '#666',
             mb: 4,
-            maxWidth: '50%',
           }}
         >
           {subtext || 'Explore top courses from world-class instructors but things on a cool scale'}
@@ -158,6 +157,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, heading, subtext, avat
           animate={true}
           animationType={getAnimationType()}
           delay={getAnimationDelay()}
+          sx={{
+            display: {
+              xs: 'none', // Hide on extra small (phones)
+              sm: 'block', // Show from small screens and up
+            },
+          }}
         >
           <Image
             src={getImageSrc(avatar?.image?.url)}
@@ -168,6 +173,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, heading, subtext, avat
               const target = e.currentTarget as HTMLImageElement
               target.src = '/assets/placeholder.webp'
             }}
+            unoptimized
           />
         </ProfileBubble>
       ))}

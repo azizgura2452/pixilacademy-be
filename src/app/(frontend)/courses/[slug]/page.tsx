@@ -68,10 +68,6 @@ export default async function CourseDetailPage({ params }: { params: { slug: str
           alt={course.title}
           width={1000}
           height={320}
-          onError={(e) => {
-            const target = e.currentTarget as HTMLImageElement
-            target.src = '/assets/placeholder.webp'
-          }}
           style={{ width: '100%', height: '320px', objectFit: 'cover', objectPosition: 'center' }}
         />
       </Box>

@@ -164,6 +164,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, heading, subtext, avat
             alt="Student profile"
             width={avatar.size || 40}
             height={avatar.size || 40}
+            onError={(e) => {
+              const target = e.currentTarget as HTMLImageElement
+              target.src = '/assets/placeholder.webp'
+            }}
           />
         </ProfileBubble>
       ))}

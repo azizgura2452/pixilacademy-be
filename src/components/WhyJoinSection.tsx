@@ -103,6 +103,10 @@ const WhyJoinSection: React.FC<JoinReasonsProps> = ({
                   alt={reason.title}
                   width={32}
                   height={32}
+                  onError={(e) => {
+                    const target = e.currentTarget as HTMLImageElement
+                    target.src = '/assets/placeholder.webp'
+                  }}
                   style={{ objectFit: 'contain' }}
                 />
               </IconBox>

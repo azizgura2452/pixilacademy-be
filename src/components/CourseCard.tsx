@@ -69,6 +69,10 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
         <CardMedia
           component="img"
           image={getImageSrc(course?.thumbnail?.url as string)}
+          onError={(e) => {
+            const target = e.currentTarget as HTMLImageElement
+            target.src = '/assets/placeholder.webp'
+          }}
           alt={course.title}
           sx={{ height: '100%', objectFit: 'cover', objectPosition: 'center' }}
         />
